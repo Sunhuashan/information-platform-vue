@@ -1,5 +1,24 @@
 <template>
   <div>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      fullscreen
+      :before-close="beforeClose"
+      title="修改你发布的新闻">
+      <mavon-editor
+        @save="save"
+        v-model="selectedNews.newsContentMd">
+        <template slot="left-toolbar-after">
+          <button
+            type="button"
+            @click="visible()"
+            class="op-icon  el-icon-document"
+            aria-hidden="true"
+            title="添加标题/封面">
+          </button>
+        </template>
+      </mavon-editor>
+    </el-dialog>
     <el-card>
       <el-table
         :stripe="true"
@@ -13,7 +32,7 @@
           <template slot-scope="scope">
               <el-button
                 :disabled="scope.row.newsState"
-                @click="updateNews(scope.row)"
+                @click="setSelectedNews(scope.row)"
                 type="primary"
                 round
                 icon="el-icon-edit"
@@ -75,7 +94,9 @@ export default {
       news: [],
       currentPage: 1,
       pageSize: 5,
-      total: 1
+      total: 1,
+      dialogVisible: false,
+      selectedNews: {}
     }
   },
   mounted () {
@@ -157,6 +178,23 @@ export default {
     },
     currentChange (page) {
       this.currentPage = page
+    },
+    setSelectedNews (current) {
+      this.dialogVisible = true
+      this.selectedNews = current
+    },
+    beforeClose () {
+      this.$confirm('当前修改尚未保存，是否保存？', '提示', {
+        confirmButtonText: '保存',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          this.dialogVisible = false
+        })
+        .catch(() => {
+          this.dialogVisible = false
+          this.flash()
+        })
     }
   }
 }

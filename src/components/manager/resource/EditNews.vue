@@ -28,18 +28,9 @@
       </el-row>
       <el-row style="height: calc(100vh - 140px);">
           <mavon-editor
-            @save="saveNews"
+            @save="save"
             style="height: 100%;"
             v-model="news.contentMD">
-            <template slot="left-toolbar-after">
-              <button
-                type="button"
-                @click="visible()"
-                class="op-icon  el-icon-document"
-                aria-hidden="true"
-                title="添加标题/封面">
-              </button>
-            </template>
           </mavon-editor>
       </el-row>
     </div>
@@ -51,7 +42,6 @@ export default {
   name: 'EditNews',
   data () {
     return {
-      currentManagerId: 0,
       news: {
         title: '',
         abstract: '',
@@ -61,38 +51,40 @@ export default {
       dialogVisible: false
     }
   },
-  mounted () {
-    this.getCurrentManagerId()
-  },
   methods: {
-    getCurrentManagerId () {
-      this.$axios
-        .post('/api/admin/getManagerId', {
-          managerUsername: this.$store.state.username
-        })
-    },
-    saveNews (value, render) {
+    save (value, render) {
       // value是MD，render是HTML
       if (this.news.contentMD === '') {
         this.$message.warning('新闻内容为空！')
       } else if (this.news.title === '' || this.news.abstract === '' || this.news.imagePath === '') {
         this.$message.warning('请添加新闻标题,摘要和封面！')
       } else {
-        this.$comfirm('是否发布新闻?', '提示', {
-          confirmButtonText: '确认',
+        this.$confirm('是否发布新闻?', '提示', {
+          confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         })
           .then(() => {
             this.$axios
-              .post('/api/admin/addNews', {
+              .post('/admin/addNews', {
                 newsTitle: this.news.title,
                 newsAbstract: this.news.abstract,
                 newsContentHtml: render,
                 newsContentMd: value,
-                newsReleaseId: this.currentManagerId,
+                newsReleaseName: this.$store.state.username,
                 newsImagePath: this.news.imagePath
               })
+              .then(result => {
+                if (result.data.code === 200) {
+                  this.$message.success('新闻发布成功！正在等待管理员审核...')
+                  this.$router.replace('/admin/resource/news')
+                } else {
+                  this.$message.warning('新闻发布失败！请重新尝试')
+                }
+              })
+          })
+          .catch(() => {
+            this.$message.warning('发布已取消')
           })
       }
     },
