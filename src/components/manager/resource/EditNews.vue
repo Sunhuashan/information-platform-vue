@@ -31,6 +31,15 @@
             @save="save"
             style="height: 100%;"
             v-model="news.contentMD">
+            <template slot="left-toolbar-after">
+              <button
+                type="button"
+                @click="visible()"
+                class="op-icon  el-icon-document"
+                aria-hidden="true"
+                title="添加标题/封面">
+              </button>
+            </template>
           </mavon-editor>
       </el-row>
     </div>
@@ -95,8 +104,14 @@ export default {
       this.news.imagePath = this.$refs.imageUpload.url
     },
     remove () {
+      this.$axios
+        .post('/admin/removeImage', {
+          url: this.news.imagePath
+        })
+        .then(result => {
+        })
+      this.$refs.imageUpload.url = ''
       this.news.imagePath = ''
-      // 日后应添加对后端服务器上文件删除操作
     }
   }
 }

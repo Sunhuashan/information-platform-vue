@@ -5,19 +5,39 @@
       fullscreen
       :before-close="beforeClose"
       title="修改你发布的新闻">
-      <mavon-editor
-        @save="save"
-        v-model="selectedNews.newsContentMd">
-        <template slot="left-toolbar-after">
-          <button
-            type="button"
-            @click="visible()"
-            class="op-icon  el-icon-document"
-            aria-hidden="true"
-            title="添加标题/封面">
-          </button>
-        </template>
-      </mavon-editor>
+      <el-card style="margin: 0 0 10px 0">
+      <el-row :gutter="60" style="margin: 15px 0 0 0">
+        <el-col :span="12">
+          <el-form :model="selectedNews">
+            <el-form-item label="新闻标题" label-width="70px" style="text-align:right">
+              <el-input v-model="selectedNews.newsTitle" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="新闻摘要" label-width="70px" style="text-align:right">
+              <el-input type="textarea" rows="6" v-model="selectedNews.newsAbstract" clearable></el-input>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="12">
+          <el-form :model="selectedNews">
+            <el-form-item label="新闻封面URL" label-width="100px" style="text-align:right">
+              <el-input v-model="selectedNews.newsImagePath" clearable disabled></el-input>
+            </el-form-item>
+            <el-form-item label-width="70px" style="text-align:center">
+              <image-upload></image-upload>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      </el-card>
+      <el-row>
+        <mavon-editor
+          @save="save"
+          v-model="selectedNews.newsContentMd"
+          style="height = 100%">
+          <template slot="left-toolbar-after">
+          </template>
+        </mavon-editor>
+      </el-row>
     </el-dialog>
     <el-card>
       <el-table
@@ -52,7 +72,7 @@
       </el-table>
     </el-card>
     <el-row>
-      <el-col :span="17">
+      <el-col :span="19">
         <div>
           <el-pagination
             style="margin: 20px;text-align: center"
@@ -65,28 +85,23 @@
           </el-pagination>
         </div>
       </el-col>
-      <el-col :span="7" >
+      <el-col :span="4" >
         <div style="margin: 19px;">
-          <el-button
+            <el-button
             type="primary"
             size="medium"
             round
-            @click="upload()">
-            直接上传<i class="el-icon-upload el-icon--right"></i>
-            </el-button>
-            <el-button
-            type="success"
-            size="medium"
-            round
             @click="editNews()">
-            在线编辑<i class="el-icon-edit-outline el-icon--right"></i></el-button>
+            发布新闻<i class="el-icon-edit-outline el-icon--right"></i></el-button>
         </div>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
+import ImageUpload from '../../common/ImageUpload.vue'
 export default {
+  components: { ImageUpload },
   name: 'News',
   inject: ['reload'],
   data () {
@@ -182,6 +197,7 @@ export default {
     setSelectedNews (current) {
       this.dialogVisible = true
       this.selectedNews = current
+      this.initImageList()
     },
     beforeClose () {
       this.$confirm('当前修改尚未保存，是否保存？', '提示', {
@@ -195,6 +211,12 @@ export default {
           this.dialogVisible = false
           this.flash()
         })
+    },
+    initImageList () {
+      this.$refs.ImageUpload.fileList.push({
+        name: '原文件',
+        url: this.selectedNews.newsImagePath
+      })
     }
   }
 }
