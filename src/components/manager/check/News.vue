@@ -10,9 +10,10 @@
         <el-table-column label="审核状态" align="center">
           <template slot-scope="scope">
               <el-switch
+                @change="update(scope.row)"
                 v-model="scope.row.newsState"
                 active-color="#13ce66"
-                active-text="已通过"
+                active-text="发布"
                 inactive-text="未审核">
               </el-switch>
           </template>
@@ -84,6 +85,21 @@ export default {
     detail (news) {
       this.dialogVisible = true
       this.selectedNews = news
+    },
+    update (news) {
+      this.$axios
+        .post('/admin/updateState', {
+          id: news.id,
+          newsState: news.newsState,
+          newsCheckName: this.$store.state.username
+        })
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success('状态更新成功！')
+          } else {
+            this.$message.warning(result.data.message)
+          }
+        })
     }
   }
 }

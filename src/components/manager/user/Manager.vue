@@ -188,12 +188,6 @@ export default {
           { required: true, message: '请再次输入密码', trigger: 'blur' },
           { validator: validatePass2, trigger: 'blur' }
         ],
-        email: [
-          { required: true, message: '请输入管理员邮箱', trigger: 'blur' }
-        ],
-        phone: [
-          { required: true, message: '请输入管理员电话', trigger: 'blur' }
-        ],
         tobeAddRoleIds: [
           { type: 'array', required: true, message: '请至少分配一个角色', trigger: 'change' }
         ]

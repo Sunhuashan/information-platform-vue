@@ -31,7 +31,6 @@
       </el-card>
       <el-row>
         <mavon-editor
-          @save="save"
           v-model="selectedNews.newsContentMd"
           style="height = 100%">
           <template slot="left-toolbar-after">
@@ -213,10 +212,6 @@ export default {
         })
     },
     initImageList () {
-      this.$refs.ImageUpload.fileList.push({
-        name: '原文件',
-        url: this.selectedNews.newsImagePath
-      })
     }
   }
 }
