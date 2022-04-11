@@ -80,6 +80,7 @@ export default {
         })
     },
     currentChange (page) {
+      this.dialogVisible = false
       this.currentPage = page
     },
     detail (news) {

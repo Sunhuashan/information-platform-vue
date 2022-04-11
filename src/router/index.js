@@ -22,9 +22,9 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/upload',
-      name: 'Upload',
-      component: () => import('../components/common/ImageUpload')
+      path: '/login',
+      name: 'Login',
+      component: () => import('../components/home/Login.vue')
     },
     {
       path: '/admin',
