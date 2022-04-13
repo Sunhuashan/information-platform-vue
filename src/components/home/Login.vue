@@ -2,19 +2,34 @@
   <div>
     <el-container>
       <el-aside width="550px">
-        <el-carousel height="calc(100vh - 16px)">
-          <el-carousel-item v-for="item in image" :key="item">
-            <h3 class="small">{{ item }}</h3>
+        <el-carousel height="calc(100vh - 10px)">
+          <el-carousel-item>
+            <img src="../../assets/img/test1.png">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/img/test2.png">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/img/test3.png">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/img/test4.png">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/img/test5.png">
           </el-carousel-item>
         </el-carousel>
       </el-aside>
       <el-container>
-        <el-footer  style="background: rgb(25, 25, 255);">
+        <el-footer>
+            <div style="margin: 20px;float: right;">
+              <el-link type="primary">忘记密码请点击联系管理员</el-link>
+            </div>
         </el-footer>
         <el-main>
           <el-form class="login-container" label-position="left"
                   label-width="0px">
-            <h2 class="login_title">登录</h2>
+            <h2 class="login_title">登录xx公司信息平台</h2>
             <el-form-item>
               <el-input type="text" v-model="loginForm.username" clearable
                         auto-complete="off" placeholder="账号"></el-input>
@@ -29,7 +44,7 @@
             <el-form-item>
               <el-row>
                 <el-col :span="19">
-                  <el-link type="primary" href="/register">新用户注册</el-link>
+                  <el-link type="primary" href="/register">新员工注册</el-link>
                 </el-col>
                 <el-col :span="5">
                   <el-link type="primary" href="/manager_login">管理员登录</el-link>
@@ -50,13 +65,7 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: '',
-        image: [
-          {url: require('../../assets/img/login1.png')},
-          {url: require('../../assets/img/login1.png')},
-          {url: require('../../assets/img/login1.png')},
-          {url: require('../../assets/img/login1.png')}
-        ]
+        password: ''
       }
     }
   },

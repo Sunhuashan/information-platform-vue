@@ -35,12 +35,17 @@ export default {
           managerUsername: this.loginForm.username,
           managerPassword: this.loginForm.password
         })
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
+        .then(response => {
+          if (response.data.code === 200) {
             // this.$router.replace({path: '/manager_index'})
             this.$store.commit('login', this.loginForm.username)
             var path1 = this.$route.query.redirect
             this.$router.replace({path: path1 === '/' || path1 === undefined ? '/admin' : path1})
+          } else {
+            this.$message({
+              message: response.data.message,
+              type: 'error'
+            })
           }
         })
         .catch(failResponse => {

@@ -22,9 +22,27 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/test',
+      name: 'Test',
+      component: () => import('../components/manager/test.vue')
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('../components/home/Register.vue')
+    },
+    {
       path: '/login',
       name: 'Login',
       component: () => import('../components/home/Login.vue')
+    },
+    {
+      path: '/index',
+      name: 'Index',
+      component: () => import('../components/home/Index.vue'),
+      children: [
+
+      ]
     },
     {
       path: '/admin',
