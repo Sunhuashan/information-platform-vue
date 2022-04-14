@@ -4,9 +4,7 @@
       router
       mode="horizontal"
       background-color="white"
-      text-color="#222"
-      active-text-color="red"
-      style="min-width: 1300px;">
+      text-color="#222">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>

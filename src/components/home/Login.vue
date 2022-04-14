@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container>
+    <el-container  indicator-position="none">
       <el-aside width="550px">
         <el-carousel height="calc(100vh - 10px)">
           <el-carousel-item>
