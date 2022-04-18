@@ -13,6 +13,11 @@ import 'mavon-editor/dist/css/index.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// 引入video-player播放器
+import VideoPlayer from 'vue-video-player'
+import 'vue-video-player/src/custom-theme.css'
+import 'video.js/dist/video-js.css'
+
 // 设置反向代理，前端请求默认发送到 http://localhost:8443/api
 var axios = require('axios')
 axios.defaults.baseURL = 'http://localhost:8443/api'
@@ -21,6 +26,7 @@ Vue.prototype.$axios = axios
 
 Vue.use(mavonEditor)
 Vue.use(ElementUI)
+Vue.use(VideoPlayer)
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {

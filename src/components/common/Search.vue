@@ -16,9 +16,11 @@ export default {
 }
 </script>
 <style scoped>
+    .el-input >>> .el-input__inner {
+        background-color: rgba(255, 255, 255, 0.247);
+    }
   .searchClass{
     border: #c5c5c5;
     border-radius: 50px;
-    background: #f4f4f4;
   }
 </style>

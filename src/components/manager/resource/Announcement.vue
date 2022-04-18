@@ -31,7 +31,8 @@
         <el-table-column label="公告内容" prop="annoContent" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="公告发布日期" prop="annoDate" align="center"></el-table-column>
         <el-table-column label="公告状态" prop="annoState" align="center" :formatter="fomatBoolean"></el-table-column>
-        <el-table-column label="操作" prop="annoDate" align="center">
+        <el-table-column label="审核人" prop="annoCheckName" align="center"></el-table-column>
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button
              :disabled="scope.row.annoState"

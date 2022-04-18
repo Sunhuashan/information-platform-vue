@@ -7,7 +7,7 @@
             <a href="/index">
               <img src="../../assets/img/main.png" alt="" width="55px" style="float: left;margin-top: -5px;">
             </a>
-            <span style="font-size: 32px;font-weight: bold;position:absolute;left: 100px">公司内部信息平台</span>
+            <span style="font-size: 32px;font-weight: bold;position:absolute;left: 100px;color:rgb(192,192,192)">公司内部信息平台</span>
           </el-col>
           <el-col :span="7" style="margin: 0 20px 0 20px">
             <search></search>

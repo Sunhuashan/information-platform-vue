@@ -47,6 +47,7 @@
         <el-table-column label="新闻标题" prop="newsTitle" align="center"></el-table-column>
         <el-table-column label="发布时间" prop="newsDate" align="center"></el-table-column>
         <el-table-column label="状态" prop="newsState" :formatter="formatBoolean" align="center"></el-table-column>
+        <el-table-column label="审核人" prop="newsCheckName" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
               <el-button

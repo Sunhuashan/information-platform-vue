@@ -1,24 +1,22 @@
 <template>
   <div style="margin: 12px 12px 0 0">
     <el-upload
-      ref="upload"
+      ref="videoUpload"
       action="http://localhost:8443/api/admin/save_image"
       :before-upload="beforeUpload"
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
       :on-success="success"
       :before-remove="beforeRemove"
       :limit="1"
       :on-exceed="handleExceed"
       :file-list="fileList">
-      <el-button size="small" type="primary">点击上传图片</el-button>
-      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件,且不超过1MB</div>
+      <el-button size="small" type="primary">点击上传视频</el-button>
+      <div slot="tip">只能上传MP4文件,且不超过300MB</div>
     </el-upload>
   </div>
 </template>
 <script>
 export default {
-  name: 'ImageUpload',
+  name: 'VideoUpload',
   data () {
     return {
       fileList: [],
@@ -31,21 +29,17 @@ export default {
     beforeUpload (file) {
       var fileType = file.name.substring(file.name.lastIndexOf('.') + 1)
       var size = file.size / 1024 / 1024
-      if (fileType !== 'jpg' && fileType !== 'png') {
-        this.$message.warning('仅能上传 jpg/png 类型的文件')
+      if (fileType !== 'mp4') {
+        this.$message.warning('仅能上传 mp4类型的文件')
         this.suitable = false
         return false
-      } else if (size > 1) {
-        this.$message.warning('文件限制大小:1MB , 当前文件大小:' + size.toFixed(1) + 'MB')
+      } else if (size > 300) {
+        this.$message.warning('文件限制大小:300MB , 当前文件大小:' + size.toFixed(1) + 'MB')
         this.suitable = false
         return false
       }
       this.suitable = true
       return true
-    },
-    handleRemove (file, fileList) {
-    },
-    handlePreview (file) {
     },
     handleExceed (files, fileList) {
       this.$message.warning(`限制上传 1 个文件`)

@@ -3,8 +3,8 @@
       :default-active="'/index'"
       router
       mode="horizontal"
-      background-color="white"
-      text-color="#222">
+      background-color="transparent"
+      text-color="rgb(192,192,192)">
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
