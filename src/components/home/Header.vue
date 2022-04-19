@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div style="padding: 0 0 20px 0;">
     <el-container :class="fixed == true ? 'header' : ''">
       <el-header>
         <el-row>
-          <el-col :span="7" style="margin: 15px 20px 0 20px">
+          <el-col :span="6" style="margin: 15px 0">
             <a href="/index">
-              <img src="../../assets/img/main.png" alt="" width="55px" style="float: left;margin-top: -5px;">
+              <img src="../../assets/img/main.png" alt="" width="50px" style="float: left;">
             </a>
-            <span style="font-size: 32px;font-weight: bold;position:absolute;left: 100px;color:rgb(192,192,192)">公司内部信息平台</span>
+            <span style="font-size: 32px;font-weight: bold;position:absolute;left: 70px;color:rgb(150,150,150)">公司内部信息平台</span>
           </el-col>
-          <el-col :span="7" style="margin: 0 20px 0 20px">
+          <el-col :span="7" style="margin: 0 40px 10px 50px">
             <search></search>
           </el-col>
-          <el-col :span="7" style="margin: 0 20px 0 20px">
+          <el-col :span="8" style="margin: 0 20px">
             <nav-menu></nav-menu>
           </el-col>
         </el-row>
@@ -48,7 +48,7 @@ export default {
 </script>
 <style scoped>
   .header{
-    width: 100%;
+    width: 99%;
     position: fixed;
     z-index: 9999;
   }

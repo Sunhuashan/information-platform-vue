@@ -37,11 +37,40 @@ export default new Router({
       component: () => import('../components/home/Login.vue')
     },
     {
-      path: '/index',
-      name: 'Index',
-      component: () => import('../components/home/Index.vue'),
+      path: '',
+      name: 'Home',
+      component: () => import('../components/home/Home.vue'),
       children: [
-
+        {
+          path: '/index',
+          name: 'Index',
+          component: () => import('../components/home/Index.vue')
+        },
+        {
+          path: '/news',
+          name: 'News',
+          component: () => import('../components/home/News.vue')
+        },
+        {
+          path: '/research',
+          name: 'Research',
+          component: () => import('../components/home/Research.vue')
+        },
+        {
+          path: '/product',
+          name: 'Product',
+          component: () => import('../components/home/Product.vue')
+        },
+        {
+          path: '/announcement',
+          name: 'Anno',
+          component: () => import('../components/home/Anno.vue')
+        },
+        {
+          path: '/forum',
+          name: 'Forum',
+          component: () => import('../components/home/Forum.vue')
+        }
       ]
     },
     {

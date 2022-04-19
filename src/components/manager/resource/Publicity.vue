@@ -19,6 +19,25 @@
         <el-button @click="addVideoDialog = false">取消</el-button>
       </div>
     </el-dialog>
+    <el-dialog
+      :visible.sync="addImageDialog"
+      title="发布宣传图片">
+      <el-form>
+        <el-form-item label="图片URL" label-width="70px">
+          <el-input v-model="url" disabled placeholder="图片URL"></el-input>
+        </el-form-item>
+        <el-form-item label="图片描述" label-width="70px">
+          <el-input v-model="describe" placeholder="请输入图片内容描述，以便尽快通过审核"></el-input>
+        </el-form-item>
+        <el-form-item label="上传图片" label-width="70px">
+          <image-upload ref="imageUpload" @onUpload="setImageURL" @onRemove="removeImage"></image-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="primary" @click="addImage">发布</el-button>
+        <el-button @click="addImageDialog = false">取消</el-button>
+      </div>
+    </el-dialog>
     <el-card>
       <el-table
         :stripe="true"
@@ -77,7 +96,7 @@
             type="primary"
             size="medium"
             round
-            @click="addImage()">
+            @click="addImageDialog = true">
             发布宣传图片<i class="el-icon-edit-outline el-icon--right"></i></el-button>
         </div>
       </el-col>
@@ -85,11 +104,12 @@
   </div>
 </template>
 <script>
+import ImageUpload from '../../common/ImageUpload.vue'
 import VideoUpload from '../../common/VideoUpload.vue'
 export default {
   name: 'Publicity',
   inject: ['reload'],
-  components: {VideoUpload},
+  components: {VideoUpload, ImageUpload},
   data () {
     return {
       pubs: [],
@@ -98,7 +118,8 @@ export default {
       total: 1,
       pageSize: 5,
       currentPage: 1,
-      addVideoDialog: false
+      addVideoDialog: false,
+      addImageDialog: false
     }
   },
   mounted () {
@@ -133,7 +154,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.deleteNews(thisPub)
+          this.deletePub(thisPub)
         })
         .catch(() => {
           this.$message({
@@ -142,11 +163,34 @@ export default {
           })
         })
     },
+    deletePub (thisPub) {
+      this.$axios
+        .post('/admin/removeImage', {
+          url: thisPub.pubPath
+        })
+        .then(result => {
+        })
+      this.$axios
+        .post('/admin/deletePublicity', {
+          id: thisPub.id
+        })
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success('删除成功！')
+            this.reload()
+          } else {
+            this.$message.warning('删除失败！')
+          }
+        })
+    },
     currentChange (page) {
       this.currentPage = page
     },
     setURL () {
       this.url = this.$refs.videoUpload.url
+    },
+    setImageURL () {
+      this.url = this.$refs.imageUpload.url
     },
     removeVideo () {
       this.$axios
@@ -156,6 +200,16 @@ export default {
         .then(result => {
         })
       this.$refs.videoUpload.url = ''
+      this.url = ''
+    },
+    removeImage () {
+      this.$axios
+        .post('/admin/removeImage', {
+          url: this.url
+        })
+        .then(result => {
+        })
+      this.$refs.imageUpload.url = ''
       this.url = ''
     },
     addVideo () {
@@ -182,7 +236,24 @@ export default {
       this.$router.replace(publicity.pubPath)
     },
     addImage () {
-
+      if (this.url === '') {
+        this.$message.warning('图片尚未上传')
+      } else {
+        this.$axios
+          .post('/admin/addImagePublicity', {
+            pubType: 'image',
+            pubDescribe: this.describe,
+            pubPath: this.url,
+            pubReleaseName: this.$store.state.username
+          })
+          .then(result => {
+            if (result.data.code === 200) {
+              this.$message.success('发布成功')
+              this.reload()
+              this.addImageDialog = false
+            }
+          })
+      }
     }
   }
 }

@@ -18,9 +18,11 @@ export default {
     return {
       navList: [
         {name: '/index', navItem: '首页'},
-        {name: '/jotter', navItem: '笔记本'},
-        {name: '/library', navItem: '图书馆'},
-        {name: '/admin', navItem: '个人中心'}
+        {name: '/news', navItem: '新闻'},
+        {name: '/announcement', navItem: '公告'},
+        {name: '/research', navItem: '科研'},
+        {name: '/product', navItem: '产品'},
+        {name: '/forum', navItem: '论坛'}
       ]
     }
   }
