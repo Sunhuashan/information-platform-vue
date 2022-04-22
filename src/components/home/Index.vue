@@ -81,6 +81,32 @@
           <el-row style="text-align:right;margin:0 50px 15px 0">
             <el-link href="/research" type="primary" style="font-size:15px">更多科研信息>>></el-link>
           </el-row>
+          <div style="margin: 40px">
+            <el-row align="left" style="margin: 5px 0" >
+              <el-link href="" :underline="false">
+                  <div class="anno_content" style="margin: 3px 0 0 0;">论文发表:</div>
+                </el-link>
+            </el-row>
+            <el-row align="left">
+              <div class="res_content" v-for="(item,i) in paper.slice(0,2)" :key="i">{{i+1}}.{{item.content}}</div>
+            </el-row>
+            <el-row align="left" style="margin: 5px 0">
+              <el-link href="" :underline="false">
+                  <div class="anno_content" style="margin: 3px 0 0 0">发明专利:</div>
+                </el-link>
+            </el-row>
+            <el-row align="left">
+              <div class="res_content" v-for="(item,i) in design.slice(0,2)" :key="i">{{i+1}}. {{item.content}}</div>
+            </el-row>
+            <el-row align="left" >
+              <el-link href="" :underline="false">
+                  <div class="anno_content" style="margin: 3px 0 0 0">获奖信息:</div>
+                </el-link>
+            </el-row>
+            <el-row align="left">
+              <div class="res_content" v-for="(item,i) in award.slice(0,2)" :key="i">{{i+1}}.{{item.content}}</div>
+            </el-row>
+          </div>
         </el-col>
       </el-row>
   </div>
@@ -104,6 +130,9 @@ export default {
       },
       news: [],
       research: [],
+      paper: [],
+      design: [],
+      award: [],
       anno: []
     }
   },
@@ -115,11 +144,20 @@ export default {
   },
   methods: {
     getAllResearch () {
-      this.$$axios
+      this.$axios
         .get('/home/findAllResearch')
         .then(result => {
           if (result.data.code === 200) {
             this.research = result.data.data
+            for (let i = 0; i < this.research.length; i++) {
+              if (this.research[i].type === '论文') {
+                this.paper.push(this.research[i])
+              } else if (this.research[i].type === '发明专利') {
+                this.design.push(this.research[i])
+              } else {
+                this.award.push(this.research[i])
+              }
+            }
           }
         })
     },
@@ -206,5 +244,12 @@ export default {
     height: 5vh;
     display:block;
     margin: 5px;
+  }
+  .res_content {
+    margin: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    width: 90vh;
   }
 </style>

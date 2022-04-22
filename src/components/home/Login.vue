@@ -72,19 +72,17 @@ export default {
   methods: {
     login () {
       this.$axios
-        .post('/admin/manager_login', {
-          managerUsername: this.loginForm.username,
-          managerPassword: this.loginForm.password
+        .post('/home/login', {
+          username: this.loginForm.username,
+          userPassword: this.loginForm.password
         })
         .then(successResponse => {
           if (successResponse.data.code === 200) {
-            // this.$router.replace({path: '/manager_index'})
-            this.$store.commit('login', this.loginForm.username)
-            var path1 = this.$route.query.redirect
-            this.$router.replace({path: path1})
+            this.$message.success('登录成功！')
+            this.$router.replace('/index')
+          } else {
+            this.$message.warning('用户名或密码错误！')
           }
-        })
-        .catch(failResponse => {
         })
     }
   }

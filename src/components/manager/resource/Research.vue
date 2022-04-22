@@ -47,7 +47,7 @@
       </div>
     </el-dialog>
     <el-card>
-      <el-table :data="reseach">
+      <el-table :data="reseach.slice((currentPage - 1)*pageSize , (currentPage*pageSize))">
         <el-table-column label="科研信息类型" prop="type" align="center" ></el-table-column>
         <el-table-column label="科研信息内容" prop="content" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="科研信息发布日期" prop="date" align="center"></el-table-column>
@@ -193,20 +193,26 @@ export default {
         })
     },
     addResearch () {
-      this.$axios
-        .post('/admin/addResearch', {
-          releaseName: this.$store.state.username,
-          content: this.tobeAddResearch.content,
-          type: this.tobeAddResearch.type
-        })
-        .then(reslut => {
-          if (reslut.data.code === 200) {
-            this.$message.success('发布成功!')
-            this.flash()
-          } else {
-            this.$message.warning('发布失败!')
-          }
-        })
+      if (this.tobeAddResearch.type === '') {
+        this.$message.warning('请输入科研信息!')
+      } else if (this.tobeAddResearch.content === '') {
+        this.$message.warning('请选择科研信息类型！')
+      } else {
+        this.$axios
+          .post('/admin/addResearch', {
+            releaseName: this.$store.state.username,
+            content: this.tobeAddResearch.content,
+            type: this.tobeAddResearch.type
+          })
+          .then(reslut => {
+            if (reslut.data.code === 200) {
+              this.$message.success('发布成功!')
+              this.flash()
+            } else {
+              this.$message.warning('发布失败!')
+            }
+          })
+      }
     },
     clean () {
       this.tobeAddResearch = {}
