@@ -17,8 +17,8 @@
       :visible.sync="addDialog"
       title="添加新的公告">
       <el-form :model="tobeAddAnno">
-        <el-form-item label="公告内容" label-width="90px">
-          <el-input type="textarea" rows="5" v-model="tobeAddAnno.content"  placeholder="请输入公告内容"></el-input>
+        <el-form-item label="公告内容(限180字)" label-width="80px">
+          <el-input maxlength="180" type="textarea" rows="5" v-model="tobeAddAnno.content"  placeholder="请输入公告内容"></el-input>
         </el-form-item>
       </el-form>
       <div  slot="footer" class="dialog-footer">
@@ -27,7 +27,7 @@
       </div>
     </el-dialog>
     <el-card>
-      <el-table :data="annos">
+      <el-table :data="annos.slice((currentPage-1)*pageSize,currentPage*pageSize)">
         <el-table-column label="公告内容" prop="annoContent" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="公告发布日期" prop="annoDate" align="center"></el-table-column>
         <el-table-column label="公告状态" prop="annoState" align="center" :formatter="fomatBoolean"></el-table-column>

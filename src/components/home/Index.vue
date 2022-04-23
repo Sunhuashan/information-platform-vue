@@ -65,7 +65,7 @@
                 </div>
               </el-col>
               <el-col :span="20">
-                <el-link href="" :underline="false">
+                <el-link href="/announcement" :underline="false">
                   <div class="anno_content">{{item.annoContent}}</div>
                 </el-link>
               </el-col>
@@ -83,7 +83,7 @@
           </el-row>
           <div style="margin: 40px">
             <el-row align="left" style="margin: 5px 0" >
-              <el-link href="" :underline="false">
+              <el-link href="/research#论文发表" :underline="false">
                   <div class="anno_content" style="margin: 3px 0 0 0;">论文发表:</div>
                 </el-link>
             </el-row>
@@ -91,7 +91,7 @@
               <div class="res_content" v-for="(item,i) in paper.slice(0,2)" :key="i">{{i+1}}.{{item.content}}</div>
             </el-row>
             <el-row align="left" style="margin: 5px 0">
-              <el-link href="" :underline="false">
+              <el-link href="/research#发明专利" :underline="false">
                   <div class="anno_content" style="margin: 3px 0 0 0">发明专利:</div>
                 </el-link>
             </el-row>
@@ -99,7 +99,7 @@
               <div class="res_content" v-for="(item,i) in design.slice(0,2)" :key="i">{{i+1}}. {{item.content}}</div>
             </el-row>
             <el-row align="left" >
-              <el-link href="" :underline="false">
+              <el-link href="/research#获奖信息" :underline="false">
                   <div class="anno_content" style="margin: 3px 0 0 0">获奖信息:</div>
                 </el-link>
             </el-row>

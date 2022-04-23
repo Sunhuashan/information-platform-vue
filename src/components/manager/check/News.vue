@@ -4,7 +4,7 @@
       <el-table
         stripe
         :data="news.slice((currentPage-1)*pageSize,(currentPage*pageSize))">
-        <el-table-column label="新闻标题" prop="newsTitle" align="center"></el-table-column>
+        <el-table-column label="新闻标题" prop="newsTitle" align="center"  :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="新闻作者" prop="newsReleaseName" align="center"></el-table-column>
         <el-table-column label="发布日期" prop="newsDate" align="center"></el-table-column>
         <el-table-column label="审核状态" align="center">

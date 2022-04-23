@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-row style="margin: 40px;text-align: left">
-      <div style="font-size: 30px;font-weight: bold;color:rgb(150,150,150)">
+    <el-row style="margin: 20px;text-align: left;">
+      <div style="font-size: 25px;font-weight: bold;">
         公司新闻
       </div>
     </el-row>
