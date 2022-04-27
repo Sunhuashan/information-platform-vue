@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div>
     <el-row style="margin: 20px;text-align: left;" v-if="paper.length !== 0">
       <div id="论文发表" style="font-size: 25px;font-weight: bold;">
         论文发表
@@ -25,8 +26,10 @@
       <div v-for="(item,i) in award" :key="i" style="margin: 12px">{{i+1}}.{{item.content}}</div>
     </el-row>
   </div>
+  </div>
 </template>
 <script>
+import Bus from '../../bus.js'
 export default {
   data () {
     return {
@@ -37,26 +40,29 @@ export default {
     }
   },
   mounted () {
-    this.getAllResearch()
+    this.research = this.$parent.researchRes
+    this.init()
+  },
+  created () {
+    Bus.$on('researchRes', (val) => {
+      this.research = val
+      this.init()
+    })
   },
   methods: {
-    getAllResearch () {
-      this.$axios
-        .get('/home/findAllResearch')
-        .then(result => {
-          if (result.data.code === 200) {
-            this.research = result.data.data
-            for (let i = 0; i < this.research.length; i++) {
-              if (this.research[i].type === '论文') {
-                this.paper.push(this.research[i])
-              } else if (this.research[i].type === '发明专利') {
-                this.design.push(this.research[i])
-              } else {
-                this.award.push(this.research[i])
-              }
-            }
-          }
-        })
+    init () {
+      this.paper = []
+      this.design = []
+      this.award = []
+      for (let i = 0; i < this.research.length; i++) {
+        if (this.research[i].type === '论文') {
+          this.paper.push(this.research[i])
+        } else if (this.research[i].type === '发明专利') {
+          this.design.push(this.research[i])
+        } else {
+          this.award.push(this.research[i])
+        }
+      }
     }
   }
 }

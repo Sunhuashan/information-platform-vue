@@ -10,7 +10,11 @@
             <span style="font-size: 32px;font-weight: bold;position:absolute;left: 70px;color:rgb(150,150,150)">公司内部信息平台</span>
           </el-col>
           <el-col :span="7" style="margin: 0 40px 10px 50px">
-            <search></search>
+            <search
+              ref="search"
+              @onNewsRes="setNewsRes"
+              @onAnnoRes="setAnnoRes"
+              @onResearchRes="setResearchRes"></search>
           </el-col>
           <el-col :span="8" style="margin: 0 20px">
             <nav-menu></nav-menu>
@@ -28,7 +32,10 @@ export default {
   name: 'Header',
   data () {
     return {
-      fixed: false
+      fixed: false,
+      newsRes: [],
+      annoRes: [],
+      researchRes: []
     }
   },
   mounted () {
@@ -42,6 +49,18 @@ export default {
       } else {
         this.fixed = false
       }
+    },
+    setNewsRes () {
+      this.newsRes = this.$refs.search.newsRes
+      this.$emit('onNewsRes')
+    },
+    setAnnoRes () {
+      this.annoRes = this.$refs.search.annoRes
+      this.$emit('onAnnoRes')
+    },
+    setResearchRes () {
+      this.researchRes = this.$refs.search.researchRes
+      this.$emit('onResearchRes')
     }
   }
 }

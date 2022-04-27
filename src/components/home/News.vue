@@ -18,7 +18,7 @@
             </el-row>
             <el-row>
               <div style="float: right">
-                <el-link href="" type="primary">了解更多...</el-link>
+                <el-button type="text" @click="sendNews(item.id)">了解更多...</el-button>
               </div>
             </el-row>
           </div>
@@ -39,14 +39,19 @@
   </div>
 </template>
 <script>
+import Bus from '../../bus.js'
 export default {
   data () {
     return {
       news: [],
       total: 1,
       pageSize: 6,
-      currentPage: 1
+      currentPage: 1,
+      selectedNewsId: {}
     }
+  },
+  destroyed () {
+    Bus.$emit('id', this.selectedNewsId)
   },
   mounted () {
     this.getAllNews()
@@ -64,6 +69,10 @@ export default {
     },
     currentChange (page) {
       this.currentPage = page
+    },
+    sendNews (currentId) {
+      this.selectedNewsId = currentId
+      this.$router.replace('/news/detail')
     }
   }
 }

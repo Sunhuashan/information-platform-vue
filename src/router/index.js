@@ -42,6 +42,31 @@ export default new Router({
       component: () => import('../components/home/Home.vue'),
       children: [
         {
+          path: '/research/result',
+          name: 'ResearchRes',
+          component: () => import('../components/home/ResearchRes.vue')
+        },
+        {
+          path: '/announcement/result',
+          name: 'AnnoRes',
+          component: () => import('../components/home/AnnoRes.vue')
+        },
+        {
+          path: '/news/result',
+          name: 'NewsRes',
+          component: () => import('../components/home/NewsRes.vue')
+        },
+        {
+          path: '/empty',
+          name: 'Empty',
+          component: () => import('../components/common/Empty.vue')
+        },
+        {
+          path: '/news/detail',
+          name: 'NewsDetail',
+          component: () => import('../components/home/NewsDetail.vue')
+        },
+        {
           path: '/index',
           name: 'Index',
           component: () => import('../components/home/Index.vue')

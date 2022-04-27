@@ -39,7 +39,7 @@
               </el-row>
               <el-row>
                 <div style="float: right">
-                  <el-link href="" type="primary">了解更多...</el-link>
+                  <el-button type="text" @click="sendNews(item.id)">了解更多...</el-button>
                 </div>
               </el-row>
             </div>
@@ -112,6 +112,7 @@
   </div>
 </template>
 <script>
+import Bus from '../../bus.js'
 export default {
   name: 'Index',
   data () {
@@ -133,7 +134,8 @@ export default {
       paper: [],
       design: [],
       award: [],
-      anno: []
+      anno: [],
+      selectedNewsId: ''
     }
   },
   mounted () {
@@ -142,7 +144,14 @@ export default {
     this.getAllAnno()
     this.getAllResearch()
   },
+  destroyed () {
+    Bus.$emit('id', this.selectedNewsId)
+  },
   methods: {
+    sendNews (currentId) {
+      this.selectedNewsId = currentId
+      this.$router.replace('/news/detail')
+    },
     getAllResearch () {
       this.$axios
         .get('/home/findAllResearch')
