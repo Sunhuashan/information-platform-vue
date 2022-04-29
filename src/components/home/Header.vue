@@ -9,7 +9,7 @@
             </a>
             <span style="font-size: 32px;font-weight: bold;position:absolute;left: 70px;color:rgb(150,150,150)">公司内部信息平台</span>
           </el-col>
-          <el-col :span="7" style="margin: 0 40px 10px 50px">
+          <el-col :span="6" style="margin: 0 40px 10px 50px">
             <search
               ref="search"
               @onNewsRes="setNewsRes"
@@ -18,6 +18,9 @@
           </el-col>
           <el-col :span="8" style="margin: 0 20px">
             <nav-menu></nav-menu>
+          </el-col>
+          <el-col :span="1">
+            <i class="el-icon-switch-button" v-on:click="logout" style="font-size: 30px;float: right;margin: 20px 0;color:rgb(150,150,150)"></i>
           </el-col>
         </el-row>
       </el-header>
@@ -61,6 +64,11 @@ export default {
     setResearchRes () {
       this.researchRes = this.$refs.search.researchRes
       this.$emit('onResearchRes')
+    },
+    logout () {
+      var _this = this
+      _this.$store.commit('general_logout')
+      _this.$router.replace('/login')
     }
   }
 }

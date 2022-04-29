@@ -7,7 +7,8 @@
     background-color="#303130"
     text-color="#fff"
     active-text-color="#ffd04b"
-    :collapse="isCollapse">
+    :collapse="isCollapse"
+    unique-opened="true">
     <div style="height: 80px;"></div>
       <!--index 没有用但是必需字段-->
       <el-submenu  v-for="(item,i) in adminMenus" :key="i" :index="(i).toString()" style="text-align: left">

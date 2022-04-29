@@ -94,7 +94,24 @@ export default new Router({
         {
           path: '/forum',
           name: 'Forum',
-          component: () => import('../components/home/Forum.vue')
+          component: () => import('../components/home/Forum.vue'),
+          children: [
+            {
+              path: '/forum',
+              name: 'Posts',
+              component: () => import('../components/home/Posts.vue')
+            },
+            {
+              path: '/forum/release',
+              name: 'ReleasePost',
+              component: () => import('../components/home/ReleasePost.vue')
+            },
+            {
+              path: '/forum/info',
+              name: 'Info',
+              component: () => import('../components/home/Info.vue')
+            }
+          ]
         }
       ]
     },

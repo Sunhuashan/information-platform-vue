@@ -79,6 +79,7 @@ export default {
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             this.$message.success('登录成功！')
+            this.$store.commit('general_login', this.loginForm.username)
             this.$router.replace('/index')
           } else {
             this.$message.warning('用户名或密码错误！')

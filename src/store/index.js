@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // state 中存放数据
   state: {
+    general_username: window.localStorage.getItem('general_username') == null ? '' : JSON.parse(window.localStorage.getItem('general_username' || '[]')),
     username: window.localStorage.getItem('username') == null ? '' : JSON.parse(window.localStorage.getItem('username' || '[]')),
     adminMenus: window.localStorage.getItem('adminMenus') == null ? '' : JSON.parse(window.localStorage.getItem('adminMenus'))
     // adminMenus: []
@@ -26,6 +27,14 @@ export default new Vuex.Store({
       window.localStorage.removeItem('username')
       state.adminMenus = []
       window.localStorage.removeItem('adminMenus')
+    },
+    general_login (state, data) {
+      state.general_username = data
+      window.localStorage.setItem('general_username', JSON.stringify(data))
+    },
+    general_logout (state) {
+      state.general_username = ''
+      window.localStorage.removeItem('general_username')
     }
   }
 })
