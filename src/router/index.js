@@ -102,6 +102,11 @@ export default new Router({
               component: () => import('../components/home/Posts.vue')
             },
             {
+              path: '/forum/detail',
+              name: 'PostsDetail',
+              component: () => import('../components/home/PostsDetail.vue')
+            },
+            {
               path: '/forum/release',
               name: 'ReleasePost',
               component: () => import('../components/home/ReleasePost.vue')

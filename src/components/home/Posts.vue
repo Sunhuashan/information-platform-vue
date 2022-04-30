@@ -5,13 +5,13 @@
         <hr>
           <el-row class="posts_box">
             <el-col :span="15">
-              <el-link herf="" class="title" :underline="false">{{posts[i-1].title}}</el-link>
+              <el-link  @click="setSelectedPosts(posts[i-1])" class="title" :underline="false">{{posts[i-1].title}}</el-link>
             </el-col>
             <el-col :span="4" class="author">
-              root-001
+              {{posts[i-1].releaseName}}
             </el-col>
             <el-col :span="4" class="author">
-              2022-01-23
+              {{posts[i-1].date}}
             </el-col>
           </el-row>
       </li>
@@ -21,17 +21,22 @@
   </div>
 </template>
 <script>
+import Bus from '../../bus.js'
 export default {
   name: 'Posts',
   data () {
     return {
       posts: [],
       len: 1,
-      count: 0
+      count: 0,
+      selectedPosts: {}
     }
   },
   mounted () {
     this.getAllPosts()
+  },
+  destroyed () {
+    Bus.$emit('posts', this.selectedPosts)
   },
   methods: {
     getAllPosts () {
@@ -44,6 +49,10 @@ export default {
             _this.len = result.data.data.length
           }
         })
+    },
+    setSelectedPosts (ps) {
+      this.selectedPosts = ps
+      this.$router.replace('/forum/detail')
     },
     load () {
       if (this.count < this.len) {
@@ -66,6 +75,7 @@ export default {
     margin: 5px;
   }
   .author {
+    text-align: center;
     font-weight: bold;
     font-size: 20px;
     color: darkgray;

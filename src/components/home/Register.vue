@@ -101,7 +101,7 @@ export default {
               userSex: this.regForm.sex,
               userDept: this.regForm.dept,
               userPosition: this.regForm.position,
-              usePphone: this.regForm.phone,
+              usePhone: this.regForm.phone,
               userEmail: this.regForm.email,
               userDetail: this.regForm.detail
             })
