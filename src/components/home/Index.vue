@@ -109,11 +109,61 @@
           </div>
         </el-col>
       </el-row>
+      <el-row style="height: calc(20%);text-align: center">
+        <div style="margin: calc(3%) 0;font-size: 40px;font-weight: bold;color:rgb(150,150,150)">
+          资源分享
+        </div>
+      </el-row>
+      <el-row style="height: 72vh;">
+        <el-col :span="12">
+          <el-row style="height: calc(20%);text-align: center">
+            <div style="margin: calc(4%) 0;font-size: 28px;font-weight: bold;color:rgb(150,150,150)">
+              上传区域
+            </div>
+          </el-row>
+          <div style="margin:40px;text-align:center">
+            <zip-upload></zip-upload>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <el-row style="height: calc(20%);text-align: center">
+            <div style="margin: calc(4%) 0;font-size: 28px;font-weight: bold;color:rgb(150,150,150)">
+              下载区域
+            </div>
+          </el-row>
+          <div style="margin: 40px">
+            <template>
+              <el-table
+                :data="fileList"
+                fit="false"
+                height="220"
+                border>
+                <el-table-column prop="name" width="300" label="文件名" align="center">
+                </el-table-column>
+
+                <el-table-column prop="uploadName" width="200" label="上传人" align="center">
+                </el-table-column>
+
+                <el-table-column prop="date" width="100" label="上传日期" align="center">
+                </el-table-column>
+
+                <el-table-column label="下载" align="center" width="90" fixed="right">
+                  <template slot-scope="scope">
+                    <el-button @click="download(scope.row)" size="mini" type="primary" round>下载</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </template>
+          </div>
+        </el-col>
+      </el-row>
   </div>
 </template>
 <script>
+import ZipUpload from '../common/ZipUpload.vue'
 import Bus from '../../bus.js'
 export default {
+  components: { ZipUpload },
   name: 'Index',
   data () {
     return {
@@ -135,7 +185,8 @@ export default {
       design: [],
       award: [],
       anno: [],
-      selectedNewsId: ''
+      selectedNewsId: '',
+      fileList: []
     }
   },
   mounted () {
@@ -143,11 +194,27 @@ export default {
     this.getAllNews()
     this.getAllAnno()
     this.getAllResearch()
+    this.getAllFile()
   },
   destroyed () {
     Bus.$emit('id', this.selectedNewsId)
   },
   methods: {
+    download (myFile) {
+      this.$axios
+        .post('/home/download', {
+          filename: myFile.name
+        })
+    },
+    getAllFile () {
+      this.$axios
+        .get('/home/findAllFile')
+        .then(result => {
+          if (result.data.code === 200) {
+            this.fileList = result.data.data
+          }
+        })
+    },
     sendNews (currentId) {
       this.selectedNewsId = currentId
       this.$router.replace('/news/detail')
