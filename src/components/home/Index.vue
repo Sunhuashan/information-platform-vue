@@ -203,7 +203,7 @@ export default {
     download (myFile) {
       this.$axios
         .post('/home/download', {
-          filename: myFile.name
+          name: myFile.name
         })
     },
     getAllFile () {
