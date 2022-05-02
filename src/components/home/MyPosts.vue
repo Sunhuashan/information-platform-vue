@@ -27,8 +27,8 @@
               {{posts[i-1].date}}
             </el-col>
             <el-col :span="4" class="author">
-              <el-button @click="preUpdatePosts(posts[i-1])" type="primary" size="mini" round>修改</el-button>
-              <el-button @click="preDeletePosts(posts[i-1])" type="danger" size="mini" round>删除</el-button>
+              <el-button @click="preUpdatePosts(posts[i-1])" type="primary" size="small" round plain>修改</el-button>
+              <el-button @click="preDeletePosts(posts[i-1])" type="danger" size="small" round plain>删除</el-button>
             </el-col>
           </el-row>
       </li>

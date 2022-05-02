@@ -236,6 +236,30 @@ export default new Router({
           meta: {
             requireAuth: true
           }
+        },
+        {
+          path: '/admin/check/file',
+          name: 'CheckFile',
+          component: () => import('../components/manager/check/File.vue'),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/admin/forum/posts',
+          name: 'Posts',
+          component: () => import('../components/manager/forum/Posts.vue'),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/admin/forum/comment',
+          name: 'Comment',
+          component: () => import('../components/manager/forum/Comment.vue'),
+          meta: {
+            requireAuth: true
+          }
         }
       ]
     },

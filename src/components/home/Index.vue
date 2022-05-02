@@ -201,12 +201,17 @@ export default {
   },
   methods: {
     download (myFile) {
-      this.$axios
-        .post('/home/download', {
+      this.$axios({
+        method: 'post',
+        url: '/home/download',
+        data: {
           name: myFile.name
-        })
+        },
+        dataType: 'json',
+        responseType: 'blob'
+      })
         .then(result => {
-          const blob = new Blob([result.data.data])
+          const blob = new Blob([result.data])
           const filename = myFile.name
 
           // 尝试创建带有 download 属性的<a></a>标签
@@ -226,7 +231,7 @@ export default {
     },
     getAllFile () {
       this.$axios
-        .get('/home/findAllFile')
+        .get('/home/findAllFileByState')
         .then(result => {
           if (result.data.code === 200) {
             this.fileList = result.data.data
