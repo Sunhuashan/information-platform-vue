@@ -149,7 +149,7 @@
 
                 <el-table-column label="下载" align="center" width="90" fixed="right">
                   <template slot-scope="scope">
-                    <el-button @click="download(scope.row)" size="mini" type="primary" round>下载</el-button>
+                    <el-button @click="download(scope.row)" size="mini" type="primary" plain round>下载</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -204,6 +204,24 @@ export default {
       this.$axios
         .post('/home/download', {
           name: myFile.name
+        })
+        .then(result => {
+          const blob = new Blob([result.data.data])
+          const filename = myFile.name
+
+          // 尝试创建带有 download 属性的<a></a>标签
+          if ('download' in document.createElement('a')) {
+            const link = document.createElement('a')
+            link.download = filename
+            link.style.display = 'none'
+            link.href = URL.createObjectURL(blob)
+            document.body.appendChild(link)
+            link.click() // 点击下载
+            URL.revokeObjectURL(link.href) // 释放url
+            document.body.removeChild(link)// 释放标签
+          } else {
+            navigator.msSaveBlob(blob, filename)
+          }
         })
     },
     getAllFile () {
