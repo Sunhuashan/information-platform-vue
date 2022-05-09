@@ -5,7 +5,7 @@
       title="反馈未通过审核理由">
       <el-form ref="form" :model="selectedFile" label-width="80px">
         <el-form-item label="审核反馈">
-          <el-input @click="addCheckInfo" v-model="selectedFile.checkInfo" type="textarea" :rows="5" placeholder="请输入审核未通过理由"></el-input>
+          <el-input v-model="selectedFile.checkInfo" type="textarea" :rows="5" placeholder="请输入审核未通过理由"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
