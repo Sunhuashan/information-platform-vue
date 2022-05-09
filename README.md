@@ -1,4 +1,4 @@
-# bysj-vue
+# information-platform-vue
 
 > A Vue.js project
 
