@@ -13,16 +13,16 @@
         <el-table-column label="用户名" align="center" prop="username">
         </el-table-column>
 
-        <el-table-column label="性别" align="center" prop="sex">
+        <el-table-column label="性别" align="center" prop="userSex">
         </el-table-column>
 
-        <el-table-column label="用户电话" align="center" prop="phone">
+        <el-table-column label="用户电话" align="center" prop="userPhone">
         </el-table-column>
 
-         <el-table-column label="用户部门" align="center" prop="dept">
+         <el-table-column label="用户部门" align="center" prop="userDept">
         </el-table-column>
 
-         <el-table-column label="用户职位" align="center" prop="position">
+         <el-table-column label="用户职位" align="center" prop="userPosition">
         </el-table-column>
 
         <el-table-column
