@@ -31,7 +31,7 @@
               <el-button @click="preDeletePosts(posts[i-1])" type="danger" size="small" round plain>删除</el-button>
             </el-col>
             <el-col :span="4" class="author">
-              <div>{{posts[i-1].state === true ? '已审核' : '未通过'}}</div>
+              <div>{{posts[i-1].state === true ? '已通过' : '暂未通过'}}</div>
             </el-col>
             <el-col :span="4" style="margin:5px;text-align:center">
               <el-tooltip class="item" effect="dark" :content="posts[i-1].checkInfo === '' ? '待审核' : posts[i-1].checkInfo" placement="top" >
