@@ -117,6 +117,11 @@ export default new Router({
               component: () => import('../components/home/MyPosts.vue')
             },
             {
+              path: '/forum/file',
+              name: 'File',
+              component: () => import('../components/home/MyFile.vue')
+            },
+            {
               path: '/forum/info',
               name: 'Info',
               component: () => import('../components/home/Info.vue')

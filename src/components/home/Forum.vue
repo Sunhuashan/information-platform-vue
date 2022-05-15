@@ -20,6 +20,10 @@
             <i class="el-icon-tickets"></i>
             <span slot="title">我的发帖</span>
           </el-menu-item>
+          <el-menu-item index="/forum/file">
+            <i class="el-icon-folder-opened"></i>
+            <span slot="title">我的共享文件</span>
+          </el-menu-item>
           <el-menu-item index="/forum/info">
             <i class="el-icon-user"></i>
             <span slot="title">个人信息</span>

@@ -20,8 +20,8 @@
       <li v-for="i in count" :key="i">
         <hr>
           <el-row class="posts_box">
-            <el-col :span="15">
-              <el-link  @click="setSelectedPosts(posts[i-1])" class="title" :underline="false">{{posts[i-1].title}}</el-link>
+            <el-col :span="7">
+              <div class="title" :underline="false">{{posts[i-1].title}}</div>
             </el-col>
             <el-col :span="4" class="author">
               {{posts[i-1].date}}
@@ -29,6 +29,14 @@
             <el-col :span="4" class="author">
               <el-button @click="preUpdatePosts(posts[i-1])" type="primary" size="small" round plain>修改</el-button>
               <el-button @click="preDeletePosts(posts[i-1])" type="danger" size="small" round plain>删除</el-button>
+            </el-col>
+            <el-col :span="4" class="author">
+              <div>{{posts[i-1].state === true ? '已审核' : '未通过'}}</div>
+            </el-col>
+            <el-col :span="4" style="margin:5px;text-align:center">
+              <el-tooltip class="item" effect="dark" :content="posts[i-1].checkInfo === '' ? '待审核' : posts[i-1].checkInfo" placement="top" >
+                <el-button size="mini" type="primary" plain round :disabled="posts[i-1].state">审核意见</el-button>
+              </el-tooltip>
             </el-col>
           </el-row>
       </li>
@@ -148,6 +156,7 @@ export default {
     height: 5vh;
     display:block;
     margin: 5px;
+    color: darkgray;
   }
   .author {
     text-align: center;
@@ -160,5 +169,13 @@ export default {
   }
   .posts_box {
     margin: 30px 0;
+  }
+  .info {
+    font-weight: bold;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    width: 70%;
   }
 </style>
