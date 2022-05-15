@@ -44,9 +44,11 @@
         :data="news.slice((currentPage-1)*pageSize , (currentPage*pageSize))"
         max-height="window.innerHeight - 320"
         style="width: 100%">
-        <el-table-column label="新闻标题" prop="newsTitle" align="center"  :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column label="发布时间" prop="newsDate" align="center"></el-table-column>
+        <el-table-column label="新闻标题" prop="newsTitle" align="center"  :show-overflow-tooltip="true" ></el-table-column>
+        <el-table-column label="时间" prop="newsDate" align="center" width="110px"></el-table-column>
         <el-table-column label="状态" prop="newsState" :formatter="formatBoolean" align="center"></el-table-column>
+        <el-table-column label="意见" prop="checkInfo" align="center" :show-overflow-tooltip="true" width="70px">
+        </el-table-column>
         <el-table-column label="审核人" prop="newsCheckName" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">

@@ -29,8 +29,10 @@
     <el-card>
       <el-table :data="annos.slice((currentPage-1)*pageSize,currentPage*pageSize)">
         <el-table-column label="公告内容" prop="annoContent" align="center" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column label="公告发布日期" prop="annoDate" align="center"></el-table-column>
+        <el-table-column label="公告发布日期" prop="annoDate" align="center" width="120px"></el-table-column>
         <el-table-column label="公告状态" prop="annoState" align="center" :formatter="fomatBoolean"></el-table-column>
+        <el-table-column label="意见" prop="checkInfo" align="center" width="80px" :show-overflow-tooltip="true">
+        </el-table-column>
         <el-table-column label="审核人" prop="annoCheckName" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">

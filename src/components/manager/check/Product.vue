@@ -1,6 +1,18 @@
 <template>
   <div>
     <el-dialog
+      :visible.sync="feedbackDialog"
+      title="反馈未通过审核理由">
+      <el-form ref="form" :model="feedbackProduct" label-width="80px">
+        <el-form-item label="审核反馈">
+          <el-input v-model="feedbackProduct.checkInfo" type="textarea" :rows="5" placeholder="请输入审核未通过理由"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="primary" @click="addFeedback">提交</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog
       :visible.sync="dialogVisible"
       title="产品详情">
       <el-form :model="selectedProduct" label-width="100px" >
@@ -100,8 +112,9 @@
               @click="setSelected(scope.row)"
               type="primary"
               size="mini"
+              plain
               round>
-              查看<i class="el-icon-view el-icon--right"></i>
+              查看
             </el-button>
           </div>
         </el-table-column>
@@ -110,10 +123,21 @@
             <el-switch
               @change="update(scope.row)"
               v-model="scope.row.state"
-              active-color="#13ce66"
-              active-text="发布"
-              inactive-text="未审核">
+              active-color="#13ce66">
             </el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column label="审核意见" align="center">
+          <template slot-scope="scope">
+            <el-button
+              @click="feedback(scope.row)"
+              :disabled="scope.row.state"
+              size="mini"
+              type="primary"
+              plain
+              round>
+              编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -141,13 +165,33 @@ export default {
       currentPage: 1,
       total: 1,
       selectedProduct: {},
-      dialogVisible: false
+      dialogVisible: false,
+      feedbackProduct: {},
+      feedbackDialog: false
     }
   },
   mounted () {
     this.findProduct()
   },
   methods: {
+    feedback (product) {
+      this.feedbackDialog = true
+      this.feedbackProduct = product
+    },
+    addFeedback () {
+      this.$axios
+        .put('/admin/product-check-info', {
+          id: this.feedbackProduct.id,
+          checkInfo: this.feedbackProduct.checkInfo,
+          checkName: this.$store.state.username
+        })
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success('审核意见反馈成功！')
+            this.feedbackDialog = false
+          }
+        })
+    },
     findProduct () {
       let _this = this
       _this.$axios

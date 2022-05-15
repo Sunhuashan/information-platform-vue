@@ -52,6 +52,8 @@
         <el-table-column label="科研信息内容" prop="content" align="center" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column label="科研信息发布日期" prop="date" align="center"></el-table-column>
         <el-table-column label="状态" prop="state" align="center" :formatter="fomatBoolean"></el-table-column>
+        <el-table-column label="意见" prop="checkInfo" align="center" :show-overflow-tooltip="true" width="70px">
+        </el-table-column>
         <el-table-column label="审核人" prop="checkName" align="center"></el-table-column>
         <el-table-column label="操作" align="center" width="190px">
           <template slot-scope="scope">

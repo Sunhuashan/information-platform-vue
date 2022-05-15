@@ -46,9 +46,11 @@
         style="width: 100%">
         <el-table-column label="宣传类型" prop="pubType" align="center"></el-table-column>
         <el-table-column label="描述" :show-overflow-tooltip="true" prop="pubDescribe" align="center"></el-table-column>
-        <el-table-column label="状态" prop="pubState" :formatter="formatBoolean" align="center"></el-table-column>
-        <el-table-column label="审核人" prop="pubCheckName" align="center"></el-table-column>
         <el-table-column label="发布时间" prop="pubDate" align="center"></el-table-column>
+        <el-table-column label="状态" prop="pubState" :formatter="formatBoolean" align="center"></el-table-column>
+        <el-table-column label="意见" prop="checkInfo" align="center" :show-overflow-tooltip="true" width="70px">
+        </el-table-column>
+        <el-table-column label="审核人" prop="pubCheckName" align="center"></el-table-column>
         <el-table-column label="操作" width="200px" align="center">
           <template slot-scope="scope">
               <el-link :href="scope.row.pubPath" type="primary">

@@ -121,9 +121,11 @@
         style="width: 100%">
         <el-table-column label="产品名" prop="name" align="center"></el-table-column>
         <el-table-column label="型号" prop="model" align="center"></el-table-column>
-        <el-table-column label="状态" prop="state" :formatter="formatBoolean" align="center"></el-table-column>
-        <el-table-column label="审核人" prop="checkName" align="center"></el-table-column>
         <el-table-column label="发布时间" prop="date" align="center"></el-table-column>
+        <el-table-column label="状态" prop="state" :formatter="formatBoolean" align="center"></el-table-column>
+        <el-table-column label="意见" prop="checkInfo" align="center" :show-overflow-tooltip="true" width="70px">
+        </el-table-column>
+        <el-table-column label="审核人" prop="checkName" align="center"></el-table-column>
         <el-table-column label="操作" width="200px" align="center">
           <template slot-scope="scope">
               <el-button

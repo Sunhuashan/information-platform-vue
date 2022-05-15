@@ -1,5 +1,17 @@
 <template>
   <div>
+    <el-dialog
+      :visible.sync="feedbackDialog"
+      title="反馈未通过审核理由">
+      <el-form ref="form" :model="feedbackNews" label-width="80px">
+        <el-form-item label="审核反馈">
+          <el-input v-model="feedbackNews.checkInfo" type="textarea" :rows="5" placeholder="请输入审核未通过理由"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="primary" @click="addFeedback">提交</el-button>
+      </div>
+    </el-dialog>
     <el-card>
       <el-table
         stripe
@@ -18,13 +30,26 @@
               </el-switch>
           </template>
         </el-table-column>
+        <el-table-column label="审核意见" align="center">
+          <template slot-scope="scope">
+            <el-button
+              @click="feedback(scope.row)"
+              :disabled="scope.row.newsState"
+              size="mini"
+              type="primary"
+              plain
+              round>
+              编辑
+            </el-button>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button
               @click="detail(scope.row)"
               type="primary"
               round
-              icon="el-icon-view"
+              plain
               size="mini">
               查看
             </el-button>
@@ -61,13 +86,33 @@ export default {
       currentPage: 1,
       total: 1,
       dialogVisible: false,
-      selectedNews: {}
+      selectedNews: {},
+      feedbackNews: {},
+      feedbackDialog: false
     }
   },
   mounted () {
     this.findNews()
   },
   methods: {
+    feedback (news) {
+      this.feedbackDialog = true
+      this.feedbackNews = news
+    },
+    addFeedback () {
+      this.$axios
+        .put('/admin/news-check-info', {
+          id: this.feedbackNews.id,
+          checkInfo: this.feedbackNews.checkInfo,
+          newsCheckName: this.$store.state.username
+        })
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success('审核意见反馈成功！')
+            this.feedbackDialog = false
+          }
+        })
+    },
     findNews () {
       let _this = this
       _this.$axios

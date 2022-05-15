@@ -1,5 +1,17 @@
 <template>
   <div>
+    <el-dialog
+      :visible.sync="feedbackDialog"
+      title="反馈未通过审核理由">
+      <el-form ref="form" :model="feedbackPub" label-width="80px">
+        <el-form-item label="审核反馈">
+          <el-input v-model="feedbackPub.checkInfo" type="textarea" :rows="5" placeholder="请输入审核未通过理由"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="primary" @click="addFeedback">提交</el-button>
+      </div>
+    </el-dialog>
     <el-card>
       <el-table
         stripe
@@ -20,10 +32,21 @@
             <el-switch
               @change="update(scope.row)"
               v-model="scope.row.pubState"
-              active-color="#13ce66"
-              active-text="发布"
-              inactive-text="未审核">
+              active-color="#13ce66">
             </el-switch>
+          </template>
+        </el-table-column>
+         <el-table-column label="审核意见" align="center">
+          <template slot-scope="scope">
+            <el-button
+              @click="feedback(scope.row)"
+              :disabled="scope.row.pubState"
+              size="mini"
+              type="primary"
+              plain
+              round>
+              编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,13 +73,33 @@ export default {
       pageSize: 5,
       currentPage: 1,
       total: 1,
-      selectedPublicity: {}
+      selectedPublicity: {},
+      feedbackDialog: false,
+      feedbackPub: {}
     }
   },
   mounted () {
     this.findPublicity()
   },
   methods: {
+    feedback (pub) {
+      this.feedbackDialog = true
+      this.feedbackPub = pub
+    },
+    addFeedback () {
+      this.$axios
+        .put('/admin/publicity-check-info', {
+          id: this.feedbackPub.id,
+          checkInfo: this.feedbackPub.checkInfo,
+          pubCheckName: this.$store.state.username
+        })
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success('审核意见反馈成功！')
+            this.feedbackDialog = false
+          }
+        })
+    },
     findPublicity () {
       let _this = this
       _this.$axios

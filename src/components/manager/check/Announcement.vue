@@ -1,5 +1,17 @@
 <template>
   <div>
+    <el-dialog
+      :visible.sync="feedbackDialog"
+      title="反馈未通过审核理由">
+      <el-form ref="form" :model="feedbackAnno" label-width="80px">
+        <el-form-item label="审核反馈">
+          <el-input v-model="feedbackAnno.checkInfo" type="textarea" :rows="5" placeholder="请输入审核未通过理由"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="primary" @click="addFeedback">提交</el-button>
+      </div>
+    </el-dialog>
     <el-card>
       <el-table
         stripe
@@ -16,6 +28,19 @@
                 active-text="发布"
                 inactive-text="未审核">
               </el-switch>
+          </template>
+        </el-table-column>
+         <el-table-column label="审核意见" align="center">
+          <template slot-scope="scope">
+            <el-button
+              @click="feedback(scope.row)"
+              :disabled="scope.row.annoState"
+              size="mini"
+              type="primary"
+              plain
+              round>
+              编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -43,13 +68,33 @@ export default {
       currentPage: 1,
       total: 1,
       dialogVisible: false,
-      selectedAnno: {}
+      selectedAnno: {},
+      feedbackAnno: {},
+      feedbackDialog: false
     }
   },
   mounted () {
     this.findAnno()
   },
   methods: {
+    feedback (anno) {
+      this.feedbackDialog = true
+      this.feedbackAnno = anno
+    },
+    addFeedback () {
+      this.$axios
+        .put('/admin/anno-check-info', {
+          id: this.feedbackAnno.id,
+          checkInfo: this.feedbackAnno.checkInfo,
+          annoCheckName: this.$store.state.username
+        })
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success('审核意见反馈成功！')
+            this.feedbackDialog = false
+          }
+        })
+    },
     findAnno () {
       let _this = this
       _this.$axios
