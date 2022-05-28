@@ -23,7 +23,7 @@
               <el-input v-model="selectedNews.newsImagePath" clearable disabled></el-input>
             </el-form-item>
             <el-form-item label-width="70px" style="text-align:center">
-              <image-upload></image-upload>
+              <image-upload ref="imageUpload2" @onUpload="uploadSucc"></image-upload>
             </el-form-item>
           </el-form>
         </el-col>
@@ -31,6 +31,7 @@
       </el-card>
       <el-row>
         <mavon-editor
+          @save="update"
           v-model="selectedNews.newsContentMd"
           style="height = 100%">
           <template slot="left-toolbar-after">
@@ -199,22 +200,47 @@ export default {
     setSelectedNews (current) {
       this.dialogVisible = true
       this.selectedNews = current
-      this.initImageList()
+    },
+    uploadSucc () {
+      this.selectedNews.newsImagePath = this.$refs.imageUpload2.url
     },
     beforeClose () {
-      this.$confirm('当前修改尚未保存，是否保存？', '提示', {
-        confirmButtonText: '保存',
-        cancelButtonText: '取消'
+      this.$confirm('离开后该页面内容将不会保存，是否离开?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           this.dialogVisible = false
-        })
-        .catch(() => {
-          this.dialogVisible = false
           this.flash()
         })
+        .catch(() => {
+        })
     },
-    initImageList () {
+    update (value, render) {
+      this.$confirm('是否发布新闻?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.$axios
+            .put('/admin/news', {
+              id: this.selectedNews.id,
+              newsAbstract: this.selectedNews.newsAbstract,
+              newsTitle: this.selectedNews.newsTitle,
+              newsContentHtml: render,
+              newsContentMd: value,
+              newsImagePath: this.selectedNews.newsImagePath,
+              newsReleaseName: this.$store.state.username
+            })
+            .then(result => {
+              if (result.data.code === 200) {
+                this.$message.success('修改成功！')
+                this.dialogVisible = false
+              }
+            })
+        })
     }
   }
 }
